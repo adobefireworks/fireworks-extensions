@@ -1,0 +1,26 @@
+
+	/**
+	  * Duplicates elements in selection.
+	  */
+
+	var dom = fw.getDocumentDOM();
+	
+	var names = [];
+	var selection = fw.selection;
+	for( var i = 0, j = selection.length; i < j; i++ ) {
+		if( selection[i] == "[object SliceHotspot]" ) {
+			names.push( selection[i].baseName );
+		} else {
+			names.push( null );
+		}
+	}
+	
+	dom.cloneSelection();
+	
+	for( var i = 0, j = fw.selection.length; i < j; i++ ) {
+		if( fw.selection[i] == "[object SliceHotspot]" ) {
+			fw.selection[i].baseName = selection[i].baseName === null
+				? null
+				: selection[i].baseName + "_d";
+		} 
+	}
