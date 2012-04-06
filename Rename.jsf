@@ -1,0 +1,22 @@
+
+	/**
+	  * Renames selected element.
+	  */
+	
+	if( fw.selection.length === 1 ) {
+		var name = null,
+			new_name = null;
+		
+		var el = fw.selection[0];
+		if( el == "[object SliceHotspot]" ) {
+			new_name = prompt( "Rename", el.baseName == null ? "" : el.baseName );
+			if( new_name !== null ) {
+				el.baseName = new_name;
+			} 
+		} else {
+			new_name = prompt( "Rename", el.name == null ? "" : el.name );
+			if( new_name !== null ) {
+				el[0].name = new_name;
+			}
+		}
+	}

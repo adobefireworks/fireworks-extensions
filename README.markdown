@@ -16,3 +16,10 @@ Smart Duplicate
 Duplicates current selection in-place and also duplicates slices with names with `_d` suffix.
 
 I've mapped this to Ctrl+D.
+
+Rename
+======
+
+Shows a dialog to change the name of currently selected element. It only works when one element is selected.
+
+I've mapped this to F2. (Originally toggles the Layers window, but I don't use that)
