@@ -21,6 +21,6 @@
 		if( fw.selection[i] == "[object SliceHotspot]" ) {
 			fw.selection[i].baseName = selection[i].baseName === null
 				? null
-				: selection[i].baseName + "_d";
+				: selection[i].baseName; // + "_d";
 		} 
 	}
