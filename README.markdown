@@ -30,5 +30,13 @@ Find Element
 
 Asks for a name and tries to find elements with that name. All elements found matching the name will be selected.
 
+You can also use wildcards such as:
+
+* `*name` will find everything that ends with `name`
+* `name*` will find everything that starts with `name`
+* `*name*` will find everything that has `name` in the middle
+* `*name1*name2*` will find everything that has `name1` and `name2` in the middle
+* etc.
+
 I've mapped this to F3.
  

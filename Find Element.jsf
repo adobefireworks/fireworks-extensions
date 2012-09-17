@@ -1,27 +1,62 @@
 
+	// Not very efficient, but works and that's what we want for now.
+	function makeRegExp(q)
+	{
+		var r = "^";
+		for (var i = 0; i < q.length; i++) {
+			switch (q[i])
+			{
+			case '/':
+			case '.':
+			case '+':
+			case '?':
+			case '|':
+			case '(':
+			case ')':
+			case '[':
+			case ']':
+			case '{':
+			case '}':
+			case '\\':
+				r += "\\"+q[i];
+				break;
+				
+			case '*':
+				r += "(.*)";
+				break;
+				
+			default:
+				r += q[i];
+			}
+		}
+		r += "$";
+		
+		return new RegExp(r);
+	}
+
 	var dom = fw.getDocumentDOM();
 
-	function walkLayers(layers, q) {
+	function walkLayers(layers, r) {
 		var ret = [];
 		for (var i = 0; i < layers.length; i++) {
 			var layer = dom.layers[i];
-			walkElements(layer.elems, q, ret);
+			walkElements(layer.elems, r, ret);
 		}
 		return ret;
 	}
 	
-	function walkElements(elements, q, ret) {
+	function walkElements(elements, r, ret) {
 		var element;
 		for (var i = 0; i < elements.length; i++) {
 			element = elements[i];
 			// element.layerType == normal|web
 			if (!element.isLayer) {
 				if (element == "[object SliceHotspot]") {
-					if (element.baseName == q) {
+					if (element.baseName !== null && element.baseName.match(r)) {
 						ret.push(element);
 					}
 				} else { // normal element
-					if (element.name == q) {
+					if (element.name != null && element.name.match(r)) {
 						ret.push(element);
 					}
 				}
@@ -30,13 +65,15 @@
 	}
 	
 	var q = prompt("Find", "");
-
-	var elements = walkLayers(dom.layers, q);
-	if (elements.length == 1) {
-		fw.selection = elements;
-	} else if (elements.length > 1 ) {
-		alert(elements.length + " elements found with name `" + q +"`.");
-		fw.selection = elements;
-	} else {
-		alert("Element with name `" + q +"` was not found.");
+	if (q !== null) {
+		r = makeRegExp(q);
+		var elements = walkLayers(dom.layers, r);
+		if (elements.length == 1) {
+			fw.selection = elements;
+		} else if (elements.length > 1 ) {
+			alert(elements.length + " elements found with name `" + q +"`.");
+			fw.selection = elements;
+		} else {
+			alert("Element with name `" + q +"` was not found.");
+		}
 	}
