@@ -23,3 +23,12 @@ Rename
 Shows a dialog to change the name of currently selected element. It only works when one element is selected.
 
 I've mapped this to F2. (Originally toggles the Layers window, but I don't use that)
+
+
+Find Element
+============
+
+Asks for a name and tries to find elements with that name. All elements found matching the name will be selected.
+
+I've mapped this to F3.
+ 

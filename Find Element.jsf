@@ -1,0 +1,42 @@
+
+	var dom = fw.getDocumentDOM();
+
+	function walkLayers(layers, q) {
+		var ret = [];
+		for (var i = 0; i < layers.length; i++) {
+			var layer = dom.layers[i];
+			walkElements(layer.elems, q, ret);
+		}
+		return ret;
+	}
+	
+	function walkElements(elements, q, ret) {
+		var element;
+		for (var i = 0; i < elements.length; i++) {
+			element = elements[i];
+			// element.layerType == normal|web
+			if (!element.isLayer) {
+				if (element == "[object SliceHotspot]") {
+					if (element.baseName == q) {
+						ret.push(element);
+					}
+				} else { // normal element
+					if (element.name == q) {
+						ret.push(element);
+					}
+				}
+			}
+		}
+	}
+	
+	var q = prompt("Find", "");
+
+	var elements = walkLayers(dom.layers, q);
+	if (elements.length == 1) {
+		fw.selection = elements;
+	} else if (elements.length > 1 ) {
+		alert(elements.length + " elements found with name `" + q +"`.");
+		fw.selection = elements;
+	} else {
+		alert("Element with name `" + q +"` was not found.");
+	}
